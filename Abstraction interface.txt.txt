@@ -1,0 +1,117 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Program
+{
+    public class Program
+    {     
+        static void Main(string[] args)
+        {
+            Device objdevice = new Device();
+            objdevice.BrandName();
+            objdevice.Price();
+            objdevice.ModelName();
+            objdevice.IMEI();
+            Console.WriteLine("\n");
+
+            Desktop objdesktop = new Desktop();
+            objdesktop.LaptopBrandName();
+            objdesktop.LaptopModelName();
+            objdesktop.LaptopPrice();
+            Console.WriteLine("\n");
+
+            Program ob = new Program();
+            Console.WriteLine("Method over-loading");
+            int sum1 = ob.Add(1, 2);
+            Console.WriteLine("sum of the two " + "integer value : " + sum1);
+            int sum2 = ob.Add(1, 2, 3);
+            Console.WriteLine("sum of the three " + "integer value : " + sum2);
+
+            Console.ReadKey();
+        }
+        public int Add(int a, int b)
+        {
+            int sum = a + b;
+            return sum;
+        }
+
+        public int Add(int a, int b, int c)
+        {
+            int sum = a + b + c;
+            return sum;
+        }
+
+    }
+    
+    interface Laptop
+    {
+        void LaptopBrandName();
+        void LaptopModelName();
+        void LaptopPrice();     
+
+    }
+
+    public class Desktop : Laptop
+    {
+        public Desktop()
+        {
+            Console.WriteLine("Details of Laptop");
+        }
+        public void LaptopBrandName()
+        {
+            Console.WriteLine("Dell");
+        }
+
+        public void LaptopModelName()
+        {
+            Console.WriteLine("Inpresion 3000");
+        }
+
+        public void LaptopPrice()
+        {
+            Console.WriteLine("64000");
+        }
+    }
+
+    public abstract class Mobile
+    {
+        public abstract void BrandName();
+        public abstract void Price();
+        public virtual void ModelName()
+        {
+            Console.WriteLine("14 PRo Max");
+        }
+        public void IMEI()
+        {
+            Console.WriteLine("EERFE21212");
+        }
+    }
+    public class Device : Mobile
+    {
+        public Device()
+        {
+            Console.WriteLine("Details of Mobile");
+        }
+        public override void BrandName()
+        {
+            Console.WriteLine("Apple");
+        }
+        public override void Price()
+        {
+            Console.WriteLine("780000");
+        }
+        public override void ModelName()
+        {
+            Console.WriteLine("15 Pro Max");
+        }
+        public new void IMEI()
+        {
+            Console.WriteLine("FFFF344535");
+        }
+
+    }
+
+}
