@@ -114,4 +114,23 @@ namespace Program
 
     }
 
+     List<int> numbersList = new List<int>();           
+            for (int i = 1; i <=100; i++)
+            {
+                Console.WriteLine(i);
+                numbersList.Add(i);
+            }
+            Console.WriteLine("\n The Reverse of List");
+            numbersList.Reverse();
+
+            foreach (int var in numbersList)
+            {
+                Console.WriteLine(var);               
+            }
+            Console.WriteLine("Count Is: " + numbersList.Count);
+            Console.WriteLine("Capacity Is: " + numbersList.Capacity);
+            Console.ReadKey();
+
+
+
 }
