@@ -55,3 +55,32 @@ table 7 = fb_hit_history  (with new tables)
 fid,createdon,udmid,uhmid,ucmid
 create table fb_hit_history (fid int identity(1,1),createdon datetime default getdate(),udmid int,uhmid int,ucmid int);
 insert into fb_hit_history values (getdate(),401,501,601);
+
+
+=> last history addded on
+select max(createdon) from fb_hit_history;
+
+=> total type device
+select lookup_type.lp_type_name as device_type,
+count(*) as total_count
+from fb_hit_history 
+    join user_device_mapping  on fb_hit_history.udmid = user_device_mapping.udmid
+    join lookup_value on user_device_mapping.lvid = lookup_value.lvid
+    join lookup_type  on lookup_value.ltid = lookup_type.ltid
+group by lp_type_name;
+
+=>total type of network
+select lookup_type.lp_type_name as network_type,
+count(*) as total_count
+from fb_hit_history 
+    join user_connection_mapping on fb_hit_history.ucmid  = user_connection_mapping.ucmid 
+    join lookup_value on user_connection_mapping.lvid = lookup_value.lvid
+    join lookup_type  on lookup_value.ltid = lookup_type.ltid
+group by lp_type_name;
+
+=>  hit type with date range
+select lookup_value.Lvname as Hit_Type, COUNT(*) as Total_Count
+from fb_hit_history join user_hit_mapping on fb_hit_history.uhmid = user_hit_mapping.uhmid
+join lookup_value on user_hit_mapping.lvid = lookup_value.lvid
+where fb_hit_history.createdon >= '2023-08-10 12:00:00' and fb_hit_history.createdon <= '2023-08-10 11:00:00'
+group by lookup_value.Lvname;
