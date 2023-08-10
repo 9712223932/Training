@@ -1,0 +1,57 @@
+Task - 10 Aug
+
+table 1 = user_details 
+udid,auth,createdon
+create table user_details (udid int identity(101,1),auth varchar(10),createdon datetime default getdate());
+insert into user_details values ('facebook',getdate(),'Darshan');
+insert into user_details values ('gmail',getdate(),'Akshit');
+insert into user_details values ('mobile',getdate(),'Bipin');
+insert into user_details values ('gmail',getdate(),'Sani');
+insert into user_details values ('facebook',getdate(),'parth');
+insert into user_details values ('mobile',getdate(),'vasudev');
+insert into user_details values ('gmail',getdate(),'Aman');
+insert into user_details values ('gmail',getdate(),'Jay');
+insert into user_details values ('mobile',getdate(),'Dhruv');
+insert into user_details values ('facebook',getdate(),'Jemin');
+
+table 2 = lookup_type
+ltid,lp_type_name,createdon
+create table lookup_type (ltid int identity(201,1),lp_type_name varchar(20),createdon datetime default getdate());
+insert into lookup_type values ('Hit',getdate());
+insert into lookup_type values ('Device',getdate());
+insert into lookup_type values ('Connection',getdate());
+
+table 3 = lookup_value
+lvid,lvname,ltid,createdon
+create table lookup_value (lvid int identity(301,1),Lvname varchar(10),createdon datetime default getdate(),ltid int);
+
+table 4 = user_device_mapping
+udmid,uid,lvid,createdon
+create table user_device_mapping (udmid int identity(401,1),createdon datetime default getdate(),udid int,lvid int);
+insert into user_device_mapping values (getdate(),101,304);
+insert into user_device_mapping values (getdate(),102,305);
+insert into user_device_mapping values (getdate(),103,305);
+insert into user_device_mapping values (getdate(),104,304);
+insert into user_device_mapping values (getdate(),105,305);
+insert into user_device_mapping values (getdate(),106,304);
+insert into user_device_mapping values (getdate(),107,305);
+insert into user_device_mapping values (getdate(),108,305);
+insert into user_device_mapping values (getdate(),109,304);
+insert into user_device_mapping values (getdate(),110,305);
+
+table 5 = user_hit_mapping
+uhmit,uid,lvid,createdon
+create table user_hit_mapping (uhmid int identity(501,1),createdon datetime default getdate(),udid int,lvid int);
+insert into user_hit_mapping  values (getdate(),101,301);
+insert into user_hit_mapping  values (getdate(),101,302);
+insert into user_hit_mapping  values (getdate(),101,303);
+
+table 6 = user_connection_mapping
+ucmid,uid,lvid,createdon
+create table user_connection_mapping (ucmid int identity(601,1),createdon datetime default getdate(),udid int,lvid int);
+insert into user_connection_mapping   values (getdate(),110,308);
+
+table 7 = fb_hit_history  (with new tables)
+fid,createdon,udmid,uhmid,ucmid
+create table fb_hit_history (fid int identity(1,1),createdon datetime default getdate(),udmid int,uhmid int,ucmid int);
+insert into fb_hit_history values (getdate(),401,501,601);
