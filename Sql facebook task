@@ -1,1 +1,45 @@
+CREATE TABLE UserDetails (UserDetailsId int IDENTITY(1,1),UserName varchar(10),CreatedOn datetime default getdate()) 
+CREATE TABLE LookupType (LookupTypeId int IDENTITY(101,1),LookupTypeName varchar(20),CreatedOn datetime default getdate()) 
+CREATE TABLE LookupValue(LookupValueId int IDENTITY(201,1),LookupValueName varchar(20),LookupTypeId int,CreatedOn datetime default getdate()) 
+CREATE TABLE UserDeviceMapping (UserDeviceMappingId int IDENTITY(301,1),UserDetailsId int,DeviceTypeId int,CreatedOn datetime default getdate())  
+CREATE TABLE FacebookHitHistory (FacebookHitHistoryId int IDENTITY(401,1),UserDeviceMappingId int,HitTypeId int,ConnectionTypeId int,CreatedOn datetime default getdate()) 
 
+
+query 1 total hit by laptop => 
+select count(*),us.UserName from FacebookHitHistory as fh
+join UserDeviceMapping as ud  on  fh.UserDeviceMappingId = ud.UserDeviceMappingId
+join LookupValue as lv on ud.DeviceTypeId =  lv.LookupValueId
+join UserDetails as us on ud.UserDetailsId = us.UserDetailsId 
+where LookupValueName='laptop'
+group by us.UserName*
+
+query 2  max hit by user => 
+select count(*) ,us.UserName from FacebookHitHistory as fh
+join UserDeviceMapping as ud  on  fh.UserDeviceMappingId = ud.UserDeviceMappingId
+join UserDetails as us on ud.UserDetailsId = us.UserDetailsId 
+join LookupValue as lv on ud.DeviceTypeId =  lv.LookupValueId
+group by us.UserName
+
+query 3 total hit by connection with device type => 
+select count(*), lv.LookupValueName from FacebookHitHistory as fh 
+join LookupValue as lv on fh.ConnectionTypeId =  lv.LookupValueId
+group by lv.LookupValueName
+
+query 4 last history addded on => 
+select top 1 FacebookHitHistoryId,createdon from FacebookHitHistory 
+order by FacebookHitHistoryId desc
+
+query 5 total type device =>
+ select count(*) from LookupType as lt
+ join LookupValue lv on lt.LookupTypeId =  lv.LookupTypeId
+ where lv.LookupTypeId=102 
+
+query 6 total type network =>
+ select count(*) from LookupType as lt
+ join LookupValue lv on lt.LookupTypeId =  lv.LookupTypeId
+ where lv.LookupTypeId=103
+
+query 7 hit type with date range =>
+select * from FacebookHitHistory as fh
+join LookupValue lv on fh.HitTypeId   = lv.LookupValueId
+where fh.CreatedOn between '2023-08-11 15:15:00' and '2023-08-11 15:15:00'
