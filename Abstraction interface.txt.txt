@@ -114,6 +114,8 @@ namespace Program
 
     }
 
+
+
      List<int> numbersList = new List<int>();           
             for (int i = 1; i <=100; i++)
             {
@@ -131,6 +133,32 @@ namespace Program
             Console.WriteLine("Capacity Is: " + numbersList.Capacity);
             Console.ReadKey();
 
+
+
+    int i,fact = 1,number;
+            Console.Write("Enter any Number: ");
+            number = int.Parse(Console.ReadLine());
+            for (i = 1; i <= number; i++)
+            {
+                fact = fact * i;
+            }
+            Console.Write("Factorial of " + number + " is: " + fact); 
+
+
+  int a, t, r, sum = 0;
+            Console.WriteLine("Enter number");
+            a = int.Parse(Console.ReadLine());
+            t = a;
+            while (a > 0)
+            {
+                r = a % 10;
+                sum = (sum * 10) + r;
+                a = a / 10;
+            }
+            if (t == sum)
+                Console.Write("Number is Palindrome.");
+            else
+                Console.Write("Number is not Palindrome.");
 
 
 }
