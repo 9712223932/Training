@@ -1,0 +1,346 @@
+----------------------------------------------------SQL Task---------------------------------------------------
+
+=> Table Creation with Sp Creation And Trigger
+
+(Trigger)
+alter trigger AccountBalanceInfo1
+on Transection after insert 
+as 
+select  cam.CustomerInformationId,cam.AccountBalance,tr.TransectionAmmount,
+Balance = cam.AccountBalance +sum(tr.TransectionAmmount) 
+FROM
+Transection tr
+inner join CustomerAccountManage cam on tr.CustomerAccountManageId = cam.CustomerAccountManageId
+where cam.CustomerInformationId=cam.CustomerInformationId
+group by cam.CustomerInformationId,cam.AccountBalance,tr.TransectionAmmount
+
+
+Table (1) = create table CustomerInformation (CustomerInformationId int identity(101,1),CustomerName varchar(10),
+CustomerMobileNumber int,CustomerAddress varchar(20),CreatedOn datetime default getdate())
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Darshan Modi
+-- Create date: 2023-Aug-18
+-- Description:	SP of Banking System table CustomerInformation	
+-- =============================================
+alter PROCEDURE CustomerInfo1
+	-- Add the parameters for the stored procedure here
+	@ciId int,
+	@custName varchar(10),
+	@custmobileNo varchar(10),
+	@custAdd varchar(20),
+	@OPType varchar(5)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	If (@ciId=0)
+BEGIN
+	Insert into CustomerInformation values(@custName,@custmobileNo,@custAdd,getdate())
+END
+ELSE
+BEGIN
+	If(@OPType='U')
+BEGIN
+	Update CustomerInformation SET CustomerName=@custName, CustomerMobileNumber=@custmobileNo,CustomerAddress=@custAdd
+	where CustomerInformationId=@ciId
+END
+ELSE
+BEGIN
+	Delete CustomerInformation where CustomerInformationId=@ciId
+END
+END
+END
+GO
+
+exec CustomerInfo1 0,'Rusih','88814133','Nashik','i'
+
+Table (2) = create table CustomerAccountManage (CustomerAccountManageId int identity(201,1),
+AccountNumber int,AccountType int,AccountBalance int,BranchName varchar(10),
+IfscCode varchar(10),CustomerInformationId int,CreatedOn datetime default getdate())
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Darshan Modi
+-- Create date: 2023-Aug-18
+-- Description:	SP of Banking System table CustomerAccountManage	
+-- =============================================
+alter PROCEDURE CustomerAccountManage1
+	-- Add the parameters for the stored procedure here
+	@camid int,
+	@accNumber varchar(10),
+	@atvid int,
+	@accBalance int,
+	@branch varchar(15),
+	@ifsc varchar(15),
+	@ciId int,	
+	@OPType varchar(5)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	If (@camid=0)
+BEGIN
+	Insert into CustomerAccountManage values(@accNumber,@atvid,@accBalance,@branch,@ifsc,@ciId,getdate())
+END
+ELSE
+BEGIN
+	If(@OPType='U')
+BEGIN
+	Update CustomerAccountManage SET AccountNumber=@accNumber,AccountType=@atvid,AccountBalance=@accBalance,
+	BranchName=@branch,IfscCode=@ifsc,CustomerInformationId=@ciId
+	where CustomerAccountManageId=@camid
+END
+ELSE
+BEGIN
+	Delete CustomerAccountManage where CustomerAccountManageId=@camid
+END
+END
+END
+GO
+
+Table (3) = create table AccountorTransectionType (AccountorTransectionTypeId int identity(301,1),
+AccountorTransectionTypeName varchar(15))
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Darshan Modi
+-- Create date: 2023-Aug-18
+-- Description:	SP of Banking System table AccountorTransectionType	
+-- =============================================
+alter PROCEDURE AccountorTransectionType1
+	-- Add the parameters for the stored procedure here
+	@attid int,
+	@attname varchar(20),
+	@OPType varchar(5)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	If (@attid=0)
+BEGIN
+	Insert into AccountorTransectionType values(@attname)
+END
+ELSE
+BEGIN
+	If(@OPType='U')
+BEGIN
+	Update AccountorTransectionType SET AccountorTransectionTypeName=@attname
+	where AccountorTransectionTypeId=@attid
+END
+ELSE
+BEGIN
+	Delete AccountorTransectionType where AccountorTransectionTypeId=@attid
+END
+END
+END
+GO
+
+Table (4) = create table AccountorTransectionValue (AccountorTransectionValueId int identity(401,1),
+AccountorTransectionValueName varchar(15),AccountorTransectionTypeId int)
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Darshan Modi
+-- Create date: 2023-Aug-18
+-- Description:	SP of Banking System table AccountorTransectionValue	
+-- =============================================
+alter PROCEDURE AccountorTransectionValue1
+	-- Add the parameters for the stored procedure here
+	@atvid int,
+	@atvname varchar(10),
+	@attid int,
+	@OPType varchar(5)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	If (@atvid=0)
+BEGIN
+	Insert into AccountorTransectionValue values(@atvname,@attid)
+END
+ELSE
+BEGIN
+	If(@OPType='U')
+BEGIN
+	Update AccountorTransectionValue SET AccountorTransectionValueName=@atvname,AccountorTransectionTypeId=@attid
+	where AccountorTransectionValueId=@atvid
+END
+ELSE
+BEGIN
+	Delete AccountorTransectionValue where AccountorTransectionValueId=@atvid
+END
+END
+END
+GO
+
+Table (5) = create table Transection (TransectionId int identity(501,1),TransectionType int,TransectionAmmount int,
+CustomerAccountManageId int,CreatedOn datetime default getdate()) 
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Darshan Modi
+-- Create date: 2023-Aug-18
+-- Description:	SP of Banking System table Transection	
+-- =============================================
+alter PROCEDURE Transection1
+	-- Add the parameters for the stored procedure here
+	@tid int,
+	@atvid int,
+	@tamount int,
+	@camid int,
+	@OPType varchar(5)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON
+
+    -- Insert statements for procedure here
+	If (@tid=0)
+BEGIN
+	Insert into Transection values(@atvid,@tamount,@camid,getdate())
+END
+ELSE
+BEGIN
+	If(@OPType='U')
+BEGIN
+	Update Transection SET TransectionType=@atvid,TransectionAmmount=@tamount,CustomerAccountManageId=@camid
+	where TransectionId=@tid
+END
+ELSE
+BEGIN
+	Delete Transection where TransectionId=@tid
+END
+END
+END
+GO
+
+
+----------------------------------------------------C# Task---------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp5
+{
+    class Program
+    {
+        public class Generic<T>
+        {
+            public T createdon { get; set; }            
+        }
+        public class CustomerInformation: Generic<DateTime>
+        {
+            public int customerInformationId  { get; set; }
+            public string customerName { get; set; }
+            public long customerMobileNumber { get; set; }
+            public string customerAddress { get; set; }        
+
+        }
+        public class CustomerAccountManage : Generic<DateTime>
+        {
+            public int customerInformationId { get; set; }
+            public long accountNumber { get; set; }
+            public int accountType { get; set; }
+            public long accountBalance { get; set; }
+            public string branch { get; set; }
+            public string ifscCode { get; set; }
+            public int CustomerAccountManageId { get; set; }
+        }
+        public class AccountorTransectionType
+        {
+            public int AccountorTransectionTypeId { get; set; }
+            public string AccountorTransectionTypeName { get; set; }
+        }
+        public class AccountorTransectionValue
+        {
+            public int AccountorTransectionValueId { get; set; }
+            public string AccountorTransectionValueName { get; set; }
+            public int AccountorTransectionTypeId { get; set; }
+        }
+        public class Transection : Generic<DateTime>
+        {
+            public int transectionId { get; set; }
+            public int transectionType { get; set; }
+            public long transectionAmmount { get; set; }
+            public int CustomerAccountManageId { get; set; }
+        }
+        static void Main()
+        {
+            CustomerInformation objCustomerInformation = new CustomerInformation();
+            objCustomerInformation.customerInformationId = 101;
+            objCustomerInformation.customerName = "Darshan";
+            objCustomerInformation.customerMobileNumber = 9712223932;
+            objCustomerInformation.customerAddress = "Surat";
+            objCustomerInformation.createdon = DateTime.Now;
+
+            CustomerAccountManage objcustomerAccountManage = new CustomerAccountManage();
+            objcustomerAccountManage.customerInformationId = 201;
+            objcustomerAccountManage.accountNumber = 10111;
+            objcustomerAccountManage.accountType = 401;
+            objcustomerAccountManage.accountBalance = 5000;
+            objcustomerAccountManage.branch = "Surat";
+            objcustomerAccountManage.ifscCode = "ST123";
+            objcustomerAccountManage.customerInformationId = 101;
+            objcustomerAccountManage.createdon = DateTime.Now;
+
+            AccountorTransectionType objAccountorTransectionType = new AccountorTransectionType();
+            objAccountorTransectionType.AccountorTransectionTypeId = 301;
+            objAccountorTransectionType.AccountorTransectionTypeName = "Account";
+
+            AccountorTransectionValue objAccountorTransectionValue = new AccountorTransectionValue();
+            objAccountorTransectionValue.AccountorTransectionValueId = 401;
+            objAccountorTransectionValue.AccountorTransectionValueName = "Savings";
+            objAccountorTransectionValue.AccountorTransectionTypeId = 301;
+
+            Transection objTransection = new Transection();
+            objTransection.transectionId = 501;
+            objTransection.transectionType = 403;
+            objTransection.transectionAmmount = 500;
+            objTransection.CustomerAccountManageId = 201;
+            objcustomerAccountManage.createdon = DateTime.Now;
+
+            Console.WriteLine($"{objCustomerInformation.customerInformationId}\t{objCustomerInformation.customerName}\t{objCustomerInformation.customerMobileNumber}\t{objCustomerInformation.customerAddress}\t{objCustomerInformation.createdon}");
+            Console.WriteLine($"{objcustomerAccountManage.customerInformationId}\t{objcustomerAccountManage.accountNumber}\t{objcustomerAccountManage.accountType}\t{objcustomerAccountManage.accountBalance}\t{objcustomerAccountManage.branch}\t{objcustomerAccountManage.ifscCode}\t{objcustomerAccountManage.customerInformationId}\t{objcustomerAccountManage.createdon}");
+            Console.WriteLine($"{objAccountorTransectionType.AccountorTransectionTypeId}\t{objAccountorTransectionType.AccountorTransectionTypeName}\t");
+            Console.WriteLine($"{objAccountorTransectionValue.AccountorTransectionValueId}\t{objAccountorTransectionValue.AccountorTransectionValueName}\t{objAccountorTransectionValue.AccountorTransectionTypeId}\t");
+            Console.WriteLine($"{objTransection.transectionId}\t{objTransection.transectionType}\t{objTransection.transectionAmmount}\t{objTransection.CustomerAccountManageId}\t{objcustomerAccountManage.createdon}\t");
+            Console.ReadKey();
+        }
+
+    }
+}
+
+
+
