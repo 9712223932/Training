@@ -1,0 +1,92 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp5
+{
+    class Program
+    {
+        public class Generic<T,Y>
+        {
+            public T createdon { get; set; }     
+            public Y Id { get; set; }
+        }
+        public class CustomerInformation: Generic<DateTime,int>
+        {           
+            public string customerName { get; set; }
+            public long customerMobileNumber { get; set; }
+            public string customerAddress { get; set; }        
+
+        }
+        public class CustomerAccountManage : Generic<DateTime, int>
+        {
+            public long accountNumber { get; set; }
+            public int accountType { get; set; }
+            public long accountBalance { get; set; }
+            public string branch { get; set; }
+            public string ifscCode { get; set; }
+            public int customerInformationId { get; set; }
+        }
+        public class AccountorTransectionType : Generic<DateTime, int>
+        {
+            public string AccountorTransectionTypeName { get; set; }
+        }
+        public class AccountorTransectionValue : Generic<DateTime, int>
+        {
+            public string AccountorTransectionValueName { get; set; }
+            public int AccountorTransectionTypeId { get; set; }
+        }
+        public class Transection : Generic<DateTime, int>
+        {
+            public int transectionType { get; set; }
+            public long transectionAmmount { get; set; }
+            public int CustomerAccountManageId { get; set; }
+        }
+        static void Main()
+        {
+            CustomerInformation objCustomerInformation = new CustomerInformation();
+            objCustomerInformation.Id = 101;
+            objCustomerInformation.customerName = "Darshan";
+            objCustomerInformation.customerMobileNumber = 9712223932;
+            objCustomerInformation.customerAddress = "Surat";
+            objCustomerInformation.createdon = DateTime.Now;
+
+            CustomerAccountManage objcustomerAccountManage = new CustomerAccountManage();
+            objcustomerAccountManage.Id = 201;
+            objcustomerAccountManage.accountNumber = 10111;
+            objcustomerAccountManage.accountType = 401;
+            objcustomerAccountManage.accountBalance = 5000;
+            objcustomerAccountManage.branch = "Surat";
+            objcustomerAccountManage.ifscCode = "ST123";
+            objcustomerAccountManage.customerInformationId = 101;
+            objcustomerAccountManage.createdon = DateTime.Now;
+
+            AccountorTransectionType objAccountorTransectionType = new AccountorTransectionType();
+            objAccountorTransectionType.Id = 301;
+            objAccountorTransectionType.AccountorTransectionTypeName = "Account";
+
+            AccountorTransectionValue objAccountorTransectionValue = new AccountorTransectionValue();
+            objAccountorTransectionValue.Id = 401;
+            objAccountorTransectionValue.AccountorTransectionValueName = "Savings";
+            objAccountorTransectionValue.AccountorTransectionTypeId = 301;
+            
+
+            Transection objTransection = new Transection();
+            objTransection.Id = 501;
+            objTransection.transectionType = 403;
+            objTransection.transectionAmmount = 500;
+            objTransection.CustomerAccountManageId = 201;
+            objcustomerAccountManage.createdon = DateTime.Now;
+
+            Console.WriteLine($"{objCustomerInformation.Id}\t{objCustomerInformation.customerName}\t{objCustomerInformation.customerMobileNumber}\t{objCustomerInformation.customerAddress}\t{objCustomerInformation.createdon}");
+            Console.WriteLine($"{objcustomerAccountManage.Id}\t{objcustomerAccountManage.accountNumber}\t{objcustomerAccountManage.accountType}\t{objcustomerAccountManage.accountBalance}\t{objcustomerAccountManage.branch}\t{objcustomerAccountManage.ifscCode}\t{objcustomerAccountManage.customerInformationId}\t{objcustomerAccountManage.createdon}");
+            Console.WriteLine($"{objAccountorTransectionType.Id}\t{objAccountorTransectionType.AccountorTransectionTypeName}\t");
+            Console.WriteLine($"{objAccountorTransectionValue.Id}\t{objAccountorTransectionValue.AccountorTransectionValueName}\t{objAccountorTransectionValue.AccountorTransectionTypeId}\t");
+            Console.WriteLine($"{objTransection.Id}\t{objTransection.transectionType}\t{objTransection.transectionAmmount}\t{objTransection.CustomerAccountManageId}\t{objcustomerAccountManage.createdon}\t");
+            Console.ReadKey();
+        }
+
+    }
+}
