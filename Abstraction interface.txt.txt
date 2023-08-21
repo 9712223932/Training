@@ -161,4 +161,39 @@ namespace Program
                 Console.Write("Number is not Palindrome.");
 
 
+         /*int num1 = 0;
+            int num2 = 0;
+
+            Console.WriteLine("Welcome to the calculator");
+            Console.WriteLine("-------------------------------------------");
+            Console.WriteLine("Enter No 1");
+            num1 = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter No 2");
+            num2 = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Choose an option from the following list:");
+            Console.WriteLine("\ta - Add");
+            Console.WriteLine("\ts - Subtract");
+            Console.WriteLine("\tm - Multiply");
+            Console.WriteLine("\td - Divide");
+            Console.Write("Your option? ");
+            switch (Console.ReadLine())
+            {
+                case "a":
+                    Console.WriteLine($"Your Add: {num1} + {num2} = " + (num1 + num2));
+                    break;
+                case "s":
+                    Console.WriteLine($"Your Subtract: {num1} - {num2} = " + (num1 - num2));
+                    break;
+                case "m":
+                    Console.WriteLine($"Your Multiply: {num1} * {num2} = " + (num1 * num2));
+                    break;
+                case "d":
+                    Console.WriteLine($"Your Divide: {num1} / {num2} = " + (num1 / num2));
+                    break;
+            }
+            Console.Write("You Done with your operaations So \n Press any key to close the Calculator...");
+            Console.ReadKey();*/
+
+
 }
