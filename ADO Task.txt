@@ -55,13 +55,15 @@ namespace ConsoleApp7
 
         public void getfirstCustomerInformation()
         {
-            /*SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
+            SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
             string retriveQuery = "select top 1 CustomerName from CustomerInformation";
             SqlCommand cmd = new SqlCommand(retriveQuery, sqlConnetion);
             cmd = new SqlCommand(retriveQuery, sqlConnetion);
             sqlConnetion.Open();
             string CustomerName = Convert.ToString(cmd.ExecuteScalar());
-            sqlConnetion.Close();*/
+            sqlConnetion.Close();
+            Console.WriteLine(CustomerName);
+            Console.ReadKey();
         }
 
 	public void InsertCustomerAccountManage()
@@ -91,13 +93,15 @@ namespace ConsoleApp7
 
 	public void getfirstCustomerAccountManage()
         {
-            /*SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
-            string retriveQuery = "select top 1 CustomerName from CustomerAccountManage";
+            SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
+            string retriveQuery = "select top 1 CustomerAccountManageId from CustomerAccountManage";
             SqlCommand cmd = new SqlCommand(retriveQuery, sqlConnetion);
             cmd = new SqlCommand(retriveQuery, sqlConnetion);
             sqlConnetion.Open();
-            string CustomerName = Convert.ToString(cmd.ExecuteScalar());
-            sqlConnetion.Close();*/
+            string CustomerAccountManageId = Convert.ToString(cmd.ExecuteScalar());
+            sqlConnetion.Close();
+            Console.WriteLine(CustomerAccountManageId);
+            Console.ReadKey();
         }
 
         public void InsertAccountorTransectionType()
@@ -108,7 +112,7 @@ namespace ConsoleApp7
             //string query = "AccountorTransectionType1";
 
             SqlCommand cmd = new SqlCommand(query, sqlConnetion);
-           /* cmd.CommandType = System.Data.CommandType.StoredProcedure;
+           /*cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.Add("@attid", SqlDbType.Int).Value = 0;
             cmd.Parameters.Add("@attname", SqlDbType.VarChar).Value = "Store SP";
             cmd.Parameters.Add("@OPType", SqlDbType.VarChar).Value = "I";*/
@@ -121,13 +125,15 @@ namespace ConsoleApp7
 
         public void getfirstAccountorTransectionType()
         {
-            /*SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
+            SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
             string retriveQuery = "select top 1 AccountorTransectionTypeName from AccountorTransectionType";
             SqlCommand cmd = new SqlCommand(retriveQuery, sqlConnetion);
             cmd = new SqlCommand(retriveQuery, sqlConnetion);
             sqlConnetion.Open();
             string AccountorTransectionTypeName = Convert.ToString(cmd.ExecuteScalar());
-            sqlConnetion.Close();*/
+            sqlConnetion.Close();
+            Console.WriteLine(AccountorTransectionTypeName);
+            Console.ReadKey();
         }
 
 	public void InsertAccountorTransectionValue()
@@ -152,13 +158,15 @@ namespace ConsoleApp7
 
         public void getfirstAccountorTransectionValue()
         {
-            /*SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
+            SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
             string retriveQuery = "select top 1 AccountorTransectionValueName from AccountorTransectionValue";
             SqlCommand cmd = new SqlCommand(retriveQuery, sqlConnetion);
             cmd = new SqlCommand(retriveQuery, sqlConnetion);
             sqlConnetion.Open();
-            string AccountorTransectionValueName  = Convert.ToString(cmd.ExecuteScalar());
-            sqlConnetion.Close();*/
+            string AccountorTransectionValueName = Convert.ToString(cmd.ExecuteScalar());
+            sqlConnetion.Close();
+            Console.WriteLine(AccountorTransectionValueName);
+            Console.ReadKey();
         }
 
 	public void InsertTransection()
@@ -185,19 +193,16 @@ namespace ConsoleApp7
 
         public void getfirstTransection()
         {
-            /*SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
-            string retriveQuery = "select top 1 CustomerName from CustomerAccountManage";
+            SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
+            string retriveQuery = "select top 1 Transectionid from Transection";
             SqlCommand cmd = new SqlCommand(retriveQuery, sqlConnetion);
             cmd = new SqlCommand(retriveQuery, sqlConnetion);
             sqlConnetion.Open();
-            string CustomerName = Convert.ToString(cmd.ExecuteScalar());
-            sqlConnetion.Close();*/
+            string Transectionid = Convert.ToString(cmd.ExecuteScalar());
+            sqlConnetion.Close();
+            Console.WriteLine(Transectionid);
+            Console.ReadKey();
         }
         
     }
-}
-           
-
-
-
-	
+}	
