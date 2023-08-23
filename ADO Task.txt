@@ -17,18 +17,24 @@ namespace ConsoleApp7
         {
             new Program().InsertCustomerInformation();
             new Program().getfirstCustomerInformation();
+	    new Program().DisplayCustomerInformation();
 
 	    new Program().InsertCustomerAccountManage();
-            new Program().getfirstCustomerAccountManage();	
+            new Program().getfirstCustomerAccountManage();
+	    new Program().DisplayCustomerAccountManage();	
 
             new Program().InsertAccountorTransectionType();
             new Program().getfirstAccountorTransectionType();
+	    new Program().DisplayAccountorTransectionType();
+	    new Program().DataTablesetAccountorTransectionType();
 
             new Program().InsertAccountorTransectionValue();
 	    new Program().getfirstAccountorTransectionValue();
+	    new Program().DisplayAccountorTransectionValue();
 
-	    new Program().InsertTransection();
+    	    new Program().InsertTransection();
             new Program().getfirstTransection();
+	    new Program().DisplayTransection();
 
         }
 
@@ -64,6 +70,23 @@ namespace ConsoleApp7
             sqlConnetion.Close();
             Console.WriteLine(CustomerName);
             Console.ReadKey();
+        }
+
+        public void DisplayCustomerInformation()
+        {
+            SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
+            string retriveQuery = "select *  from CustomerInformation";
+            SqlCommand cmd = new SqlCommand(retriveQuery, sqlConnetion);
+            sqlConnetion.Open();
+            SqlDataReader rdr = cmd.ExecuteReader();
+            if (rdr.HasRows)
+            {
+                while (rdr.Read())
+                {
+                    Console.WriteLine("{0} {1} {2} {3} {4}", rdr["CustomerInformationId"],rdr["CustomerName"], rdr["CustomerMobileNumber"], rdr["CustomerAddress"], rdr["CreatedOn"]);
+                }
+                Console.ReadKey();
+            }
         }
 
 	public void InsertCustomerAccountManage()
@@ -104,6 +127,23 @@ namespace ConsoleApp7
             Console.ReadKey();
         }
 
+        public void DisplayCustomerAccountManage()
+        {
+            SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
+            string retriveQuery = "select *  from CustomerAccountManage";
+            SqlCommand cmd = new SqlCommand(retriveQuery, sqlConnetion);
+            sqlConnetion.Open();
+            SqlDataReader rdr = cmd.ExecuteReader();
+            if (rdr.HasRows)
+            {
+                while (rdr.Read())
+                {
+                    Console.WriteLine("{0} {1} {2} {3} {4} {5} {6} {7}", rdr["CustomerAccountManageId"],rdr["AccountNumber"], rdr["AccountType"], rdr["AccountBalance"], rdr["BranchName"], rdr["IfscCode"], rdr["CustomerInformationId"], rdr["CreatedOn"]);
+                }
+                Console.ReadKey();
+            }
+        }
+
         public void InsertAccountorTransectionType()
         {
             SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
@@ -133,6 +173,49 @@ namespace ConsoleApp7
             string AccountorTransectionTypeName = Convert.ToString(cmd.ExecuteScalar());
             sqlConnetion.Close();
             Console.WriteLine(AccountorTransectionTypeName);
+            Console.ReadKey();
+        }
+
+	public void DisplayAccountorTransectionType()
+        {
+            SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
+            string retriveQuery = "select *  from AccountorTransectionType";
+            SqlCommand cmd = new SqlCommand(retriveQuery, sqlConnetion);
+            sqlConnetion.Open();
+            SqlDataReader rdr = cmd.ExecuteReader();
+            if (rdr.HasRows)
+            {
+                while (rdr.Read())
+                {
+                    Console.WriteLine("{0} {1}", rdr["AccountorTransectionTypeId"], rdr["AccountorTransectionTypeName"]);
+                }
+                Console.ReadKey();
+            }
+        }
+
+	public void DataTablesetAccountorTransectionType()
+        {
+            SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
+            string retriveQuery = "select *  from AccountorTransectionType";
+            SqlCommand cmd = new SqlCommand(retriveQuery, sqlConnetion);
+            sqlConnetion.Open();            
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            sqlConnetion.Close();
+            DataSet ds = new DataSet();
+            da.Fill(ds, "AccountorTransectionType");
+            Console.WriteLine("Using Data Set");
+            foreach (DataRow row in ds.Tables["AccountorTransectionType"].Rows)
+            {
+                Console.WriteLine("{0}{1}", row["AccountorTransectionTypeId"] + "\t", row["AccountorTransectionTypeName"]);
+            }
+            Console.WriteLine("---------------");
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            Console.WriteLine("Using Data Table");
+            foreach (DataRow row in dt.Rows)
+            {
+                Console.WriteLine("{0}{1}", row["AccountorTransectionTypeId"] + "\t", row["AccountorTransectionTypeName"]);
+            }            
             Console.ReadKey();
         }
 
@@ -169,6 +252,23 @@ namespace ConsoleApp7
             Console.ReadKey();
         }
 
+	public void DisplayAccountorTransectionValue()
+        {
+            SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
+            string retriveQuery = "select *  from AccountorTransectionValue";
+            SqlCommand cmd = new SqlCommand(retriveQuery, sqlConnetion);
+            sqlConnetion.Open();
+            SqlDataReader rdr = cmd.ExecuteReader();
+            if (rdr.HasRows)
+            {
+                while (rdr.Read())
+                {
+                    Console.WriteLine("{0} {1} {2}", rdr["AccountorTransectionValueId"], rdr["AccountorTransectionValueName"],rdr["AccountorTransectionTypeId"]);
+                }
+                Console.ReadKey();
+            }
+        }
+
 	public void InsertTransection()
         {
             SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
@@ -203,6 +303,22 @@ namespace ConsoleApp7
             Console.WriteLine(Transectionid);
             Console.ReadKey();
         }
-        
+
+	public void DisplayTransection()
+        {
+            SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
+            string retriveQuery = "select *  from Transection";
+            SqlCommand cmd = new SqlCommand(retriveQuery, sqlConnetion);
+            sqlConnetion.Open();
+            SqlDataReader rdr = cmd.ExecuteReader();
+            if (rdr.HasRows)
+            {
+                while (rdr.Read())
+                {
+                    Console.WriteLine("{0} {1} {2} {3} {4}", rdr["TransectionId"], rdr["TransectionType"],rdr["TransectionAmmount"], rdr["CustomerAccountManageId"], rdr["CreatedOn"]);
+                }
+                Console.ReadKey();
+            }
+        }        
     }
 }	
