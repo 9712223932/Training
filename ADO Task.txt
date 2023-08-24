@@ -15,6 +15,8 @@ namespace ConsoleApp7
     {
         static void Main()
         {
+
+	    new Program().AllTablesetAccountorTransectionType();
             new Program().InsertCustomerInformation();
             new Program().getfirstCustomerInformation();
 	    new Program().DisplayCustomerInformation();
@@ -37,6 +39,71 @@ namespace ConsoleApp7
 	    new Program().DisplayTransection();
 
         }
+
+	public void AllTablesetAccountorTransectionType()
+        {
+            SqlConnection sqlConnetion = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
+            
+            string retriveQuery  = "select *  from CustomerInformation";
+            string retriveQuery1 = "select *  from CustomerAccountManage";
+            string retriveQuery2 = "select *  from AccountorTransectionType";
+            string retriveQuery3 = "select *  from AccountorTransectionValue";
+            string retriveQuery4 = "select *  from Transection";
+
+            SqlCommand cmd = new SqlCommand(retriveQuery, sqlConnetion);
+            SqlCommand cmd1 = new SqlCommand(retriveQuery1, sqlConnetion);
+            SqlCommand cmd2 = new SqlCommand(retriveQuery2, sqlConnetion);
+            SqlCommand cmd3 = new SqlCommand(retriveQuery3, sqlConnetion);
+            SqlCommand cmd4 = new SqlCommand(retriveQuery4, sqlConnetion);
+
+            sqlConnetion.Open();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            SqlDataAdapter da1 = new SqlDataAdapter(cmd1);
+            SqlDataAdapter da2 = new SqlDataAdapter(cmd2); 
+            SqlDataAdapter da3 = new SqlDataAdapter(cmd3);
+            SqlDataAdapter da4 = new SqlDataAdapter(cmd4);
+            sqlConnetion.Close();
+
+            DataSet ds = new DataSet();
+            da.Fill(ds, "CustomerInformation");
+            da1.Fill(ds, "CustomerAccountManage");
+            da2.Fill(ds, "AccountorTransectionType");
+            da3.Fill(ds, "AccountorTransectionValue");
+            da4.Fill(ds, "Transection");
+
+            
+
+            Console.WriteLine("\n" + "CustomerInformation Using Data Set");
+            foreach (DataRow row in ds.Tables["CustomerInformation"].Rows)
+            {
+                Console.WriteLine("{0}{1}{2}{3}{4}", row[0] + "\t", row[1] + "\t", row[2] + "\t", row[3] + "\t", row[4]);
+            }
+
+            Console.WriteLine("\n" + "CustomerAccountManage Using Data Set");
+            foreach (DataRow row in ds.Tables["CustomerAccountManage"].Rows)
+            {
+                Console.WriteLine("{0}{1}{2}{3}{4}{5}{6}{7}", row["CustomerAccountManageId"] + "\t", row["AccountNumber"] + "\t", 			row["AccountType"]+"\t",
+                    row["AccountBalance"] + "\t", row["BranchName"] + "\t", row["IfscCode"] + "\t", row["CustomerInformationId"] + "\t", 		    row["CreatedOn"]);
+            }
+
+            Console.WriteLine("\n" + "AccountorTransectionType Using Data Set");
+            foreach (DataRow row in ds.Tables["AccountorTransectionType"].Rows)
+            {
+                Console.WriteLine("{0}{1}", row["AccountorTransectionTypeId"] + "\t", row["AccountorTransectionTypeName"]);
+            }
+
+            Console.WriteLine("\n"+"AccountorTransectionValue Using Data Set");
+            foreach (DataRow row in ds.Tables["AccountorTransectionValue"].Rows)
+            {
+                Console.WriteLine("{0}{1}{2}", row["AccountorTransectionValueId"] +"\t", row["AccountorTransectionValueName"]+"\t", 			row["AccountorTransectionTypeId"]);
+            }
+
+            Console.WriteLine("\n" + "Transection Using Data Set");
+            foreach (DataRow row in ds.Tables["Transection"].Rows)
+            {
+                Console.WriteLine("{0}{1}{2}{3}", row["TransectionId"] + "\t", row["TransectionType"] + "\t", row["TransectionAmmount"] 		+ "\t", row["CustomerAccountManageId"] + "\t", row["CreatedOn"]);
+            }
+	}
 
 	public void InsertCustomerInformation()
         {
