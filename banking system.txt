@@ -246,6 +246,9 @@ END
 END
 GO
 
+Table (6) = create table CreditCardDetail (CreditCardDetailID int identity (601,1),CardNumber int,
+Expirydate datetime default getdate(),CardLimit int,CustomerAccountManageId int)
+
 
 ----------------------------------------------------C# Task---------------------------------------------------
 class Program
