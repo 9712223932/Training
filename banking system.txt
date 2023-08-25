@@ -7,10 +7,9 @@ alter trigger AccountBalanceInfo1
 on Transection after insert 
 as 
 UPDATE CustomerAccountManage
-SET AccountBalance-=(select sum(TransectionAmmount) from inserted)
+SET AccountBalance -=(select sum(case when TransectionType=404 then TransectionAmmount end) from inserted) 
 WHERE CustomerAccountManage.CustomerAccountManageId IN (SELECT inserted.CustomerAccountManageId FROM inserted)
-select  cam.CustomerInformationId,cam.AccountBalance,tr.TransectionAmmount,
-Balanace = cam.AccountBalance +(tr.TransectionAmmount) 
+select  cam.CustomerInformationId,cam.AccountBalance,tr.TransectionAmmount
 FROM
 Transection tr
 inner join CustomerAccountManage cam on tr.CustomerAccountManageId = cam.CustomerAccountManageId
